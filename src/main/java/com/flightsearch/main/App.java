@@ -1,4 +1,4 @@
-package com.flightsearch.flightsearch;
+package com.flightsearch.main;
 
 /**
  * Hello world!
