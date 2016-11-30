@@ -12,6 +12,7 @@ import com.flightsearch.model.SearchResult;
 import com.flightsearch.population.DataCreation;
 
 public class FlightSearch {
+  private static final double CHILD_DISCOUNT = 0.67;
   private Airport srcAirport;
   private Airport dstAirport;
   private String departureDate;
@@ -45,7 +46,11 @@ public class FlightSearch {
         flights.add(flight);
       }
     }
-    System.out.println();
+    if (0 < flights.size()) {
+      System.out.println();
+    } else {
+      System.out.println("no flights available");
+    }
     return flights;
   }
 
@@ -69,9 +74,9 @@ public class FlightSearch {
     double adultAmount = this.adultPassengers * flight.getBasePrice()
         * this.getCorrection();
     double childAmount = this.childPassengers * flight.getBasePrice()
-        * this.getCorrection();
+        * this.getCorrection() * CHILD_DISCOUNT;
     double infantAmount = this.infantPassenger * airline.getInfantPrice();
-    return adultAmount + childAmount + infantAmount;
+    return roundingNumberToTwoDecimals(adultAmount + childAmount + infantAmount);
   }
 
   public double getCorrection() {
@@ -79,7 +84,7 @@ public class FlightSearch {
     if (31 <= differenceOfDays) {
       return 0.8;
     } else if (31 > differenceOfDays && 15 < differenceOfDays) {
-      return 1;
+      return 1.0;
     } else if (15 >= differenceOfDays && 3 <= differenceOfDays) {
       return 1.2;
     } else if (3 > differenceOfDays) {
@@ -106,5 +111,14 @@ public class FlightSearch {
 
   public ArrayList<SearchResult> getSearchResult() {
     return this.searchResults;
+  }
+
+  private double roundingNumberToTwoDecimals(double initialValue) {
+    double intpart = Math.floor(initialValue);
+    double result = initialValue;
+    result = (result - intpart) * Math.pow(10, 2);
+    result = Math.round(result);
+    result = (result / Math.pow(10, 2)) + intpart;
+    return result;
   }
 }

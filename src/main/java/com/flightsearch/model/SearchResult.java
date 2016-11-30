@@ -16,4 +16,14 @@ public class SearchResult {
   public double getTotalMoney() {
     return this.totalMoney;
   }
+
+  @Override
+  public boolean equals(Object object) {
+    SearchResult searchResult = (SearchResult) object;
+    if (searchResult.getFlightCode().equals(this.getFlightCode())
+        && searchResult.getTotalMoney() == this.getTotalMoney()) {
+      return true;
+    }
+    return false;
+  }
 }

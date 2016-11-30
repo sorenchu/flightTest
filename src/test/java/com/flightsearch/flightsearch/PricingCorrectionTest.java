@@ -95,7 +95,7 @@ public class PricingCorrectionTest extends TestCase {
   }
 
   protected void tearDown() throws Exception {
-    DataCreation.dataPopulation();
+    DataCreation.dataDeletion();
   }
 
 }
