@@ -11,7 +11,7 @@ public class Flight {
 
   public Flight(String srcIata, String dstIata, String flightCode,
       double basePrice) {
-    // HARDCODED
+    // HARDCODED. This should be a query to a DB
     this.srcAirport = DataCreation.getAirportFromIata(srcIata);
     this.dstAirport = DataCreation.getAirportFromIata(dstIata);
     this.flightCode = flightCode;

@@ -32,6 +32,10 @@ public class FlightSearchTest extends TestCase {
     FlightSearch flightSearch1 = new FlightSearch("Copenhage", "Frakfurt",
         tomorrow, 2, 1, 1);
     assertEquals(1, flightSearch1.betweenDates());
+    String twoDaysAfter = dateFormat.format(new Date(java.lang.System
+        .currentTimeMillis() + TWO_DAYS));
+    flightSearch1 = new FlightSearch("Copenhage", "Frakfurt",
+        twoDaysAfter, 2, 1, 1);
   }
 
   public void testSearch1() throws Exception {

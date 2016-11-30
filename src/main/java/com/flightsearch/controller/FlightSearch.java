@@ -36,7 +36,7 @@ public class FlightSearch {
     return this.departureDate;
   }
 
-  public ArrayList<Flight> doSearch() {
+  public void doSearch() {
     ArrayList<Flight> flights = new ArrayList<Flight>();
     System.out.println("Flights found");
 
@@ -51,7 +51,6 @@ public class FlightSearch {
     } else {
       System.out.println("no flights available");
     }
-    return flights;
   }
 
   public boolean isThisFlight(Flight flight) {

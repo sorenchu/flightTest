@@ -28,5 +28,4 @@ public class Airline {
   public double getInfantPrice() {
     return this.infantPrice;
   }
-
 }
