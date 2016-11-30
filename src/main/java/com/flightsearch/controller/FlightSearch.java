@@ -5,8 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.flightsearch.model.Airline;
+import com.flightsearch.model.Airport;
+import com.flightsearch.model.Flight;
+import com.flightsearch.model.SearchResult;
 import com.flightsearch.population.DataCreation;
-import com.flightsearch.model.*;
 
 public class FlightSearch {
 	private Airport srcAirport;

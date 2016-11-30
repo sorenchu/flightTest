@@ -1,6 +1,7 @@
 package com.flightsearch.model;
 
 import com.flightsearch.population.DataCreation;
+import com.flightsearch.model.Airport;
 
 public class Flight {
 	private Airport srcAirport;

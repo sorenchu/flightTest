@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.flightsearch.model.*;
+import com.flightsearch.model.Airline;
+import com.flightsearch.model.Airport;
+import com.flightsearch.model.Flight;
 
 public final class DataCreation {
 	private static ArrayList<Airport> airportList = new ArrayList<Airport>();
@@ -36,7 +38,7 @@ public final class DataCreation {
 	}
 
 	public static void populateFlights() {
-		String csvFile = "/home/antonio/Descargas/senior-java-developer-assignment-master/data.csv";
+		String csvFile = "./data.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
