@@ -8,18 +8,19 @@ public class Flight {
   private Airport dstAirport;
   private String flightCode;
   private double basePrice;
+  private DataCreation dataCreation = new DataCreation();
 
   public Flight(String srcIata, String dstIata, String flightCode,
       double basePrice) {
     // HARDCODED. This should be a query to a DB
-    this.srcAirport = DataCreation.getAirportFromIata(srcIata);
-    this.dstAirport = DataCreation.getAirportFromIata(dstIata);
+    this.srcAirport = dataCreation.getAirportFromIata(srcIata);
+    this.dstAirport = dataCreation.getAirportFromIata(dstIata);
     this.flightCode = flightCode;
     this.basePrice = basePrice;
   }
 
   public Airline getAirline() {
-    return DataCreation.getAirlineFromIata(flightCode.substring(0, 2));
+    return dataCreation.getAirlineFromIata(flightCode.substring(0, 2));
   }
 
   public Airport getSrcAirport() {

@@ -1,9 +1,6 @@
 package com.flightsearch.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.flightsearch.model.Airline;
 import com.flightsearch.model.Airport;
@@ -19,12 +16,14 @@ public class FlightSearch {
   private String departureDate;
   private Passengers passengers;
   private FlightDates flightDate;
+  private DataCreation dataCreation;
   private ArrayList<SearchResult> searchResults;
 
   public FlightSearch(String srcCity, String dstCity, String depDate,
       Integer adultPass, Integer childPass, Integer infantPass) {
-    this.srcAirport = DataCreation.getAirportFromCity(srcCity);
-    this.dstAirport = DataCreation.getAirportFromCity(dstCity);
+    this.dataCreation = new DataCreation();
+    this.srcAirport = dataCreation.getAirportFromCity(srcCity);
+    this.dstAirport = dataCreation.getAirportFromCity(dstCity);
     this.departureDate = depDate;
     this.passengers = new Passengers(adultPass, childPass, infantPass);
     this.searchResults = new ArrayList<SearchResult>();
@@ -39,7 +38,7 @@ public class FlightSearch {
     ArrayList<Flight> flights = new ArrayList<Flight>();
     System.out.println("Flights found");
 
-    for (Flight flight : DataCreation.getFlights()) {
+    for (Flight flight : dataCreation.getFlights()) {
       if (this.isThisFlight(flight)) {
         this.processFlight(flight);
         flights.add(flight);

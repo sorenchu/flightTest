@@ -18,14 +18,16 @@ public class FlightSearchTest extends TestCase {
   private static final long FIFTEEN_DAYS = 15 * ONE_DAY;
   private static final long THIRTY_ONE_DAYS = 31 * ONE_DAY;
   private SimpleDateFormat dateFormat;
+  private DataCreation dataCreation = new DataCreation();
 
   public void setUp() {
-    DataCreation.dataPopulation();
+    dataCreation.dataPopulation();
     dateFormat = new SimpleDateFormat("MM/dd/yyyy");
   }
 
   public void testPopulation() throws Exception {
-    assertEquals(89, DataCreation.getFlights().size());
+    DataCreation dataCreation = new DataCreation();
+    assertEquals(89, dataCreation.getFlights().size());
   }
 
   public void testDifferenceOfDates() throws Exception {
@@ -93,6 +95,6 @@ public class FlightSearchTest extends TestCase {
   }
 
   public void tearDown() {
-    DataCreation.dataDeletion();
+    dataCreation.dataDeletion();
   }
 }
