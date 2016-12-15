@@ -11,34 +11,34 @@ import com.flightsearch.model.Airline;
 import com.flightsearch.model.Airport;
 import com.flightsearch.model.Flight;
 
-public class DataCreation {
-  private List<Airport> airportList = new ArrayList<Airport>();
-  private List<Airline> airlineList = new ArrayList<Airline>();
-  private List<Flight> flightList = new ArrayList<Flight>();
+public final class DataCreation {
+  private static List<Airport> airportList = new ArrayList<Airport>();
+  private static List<Airline> airlineList = new ArrayList<Airline>();
+  private static List<Flight> flightList = new ArrayList<Flight>();
 
-  public void dataPopulation() {
-    this.airportList.add(new Airport("MAD", "Madrid"));
-    this.airportList.add(new Airport("BCN", "Barcelona"));
-    this.airportList.add(new Airport("LHR", "London"));
-    this.airportList.add(new Airport("CDG", "Paris"));
-    this.airportList.add(new Airport("FRA", "Frakfurt"));
-    this.airportList.add(new Airport("IST", "Istanbul"));
-    this.airportList.add(new Airport("AMS", "Amsterdam"));
-    this.airportList.add(new Airport("FCO", "Rome"));
-    this.airportList.add(new Airport("CPH", "Copenhage"));
+  public static void dataPopulation() {
+    airportList.add(new Airport("MAD", "Madrid"));
+    airportList.add(new Airport("BCN", "Barcelona"));
+    airportList.add(new Airport("LHR", "London"));
+    airportList.add(new Airport("CDG", "Paris"));
+    airportList.add(new Airport("FRA", "Frakfurt"));
+    airportList.add(new Airport("IST", "Istanbul"));
+    airportList.add(new Airport("AMS", "Amsterdam"));
+    airportList.add(new Airport("FCO", "Rome"));
+    airportList.add(new Airport("CPH", "Copenhage"));
 
-    this.airlineList.add(new Airline("IB", "Iberia", 10));
-    this.airlineList.add(new Airline("BA", "British Airways", 15));
-    this.airlineList.add(new Airline("LH", "Lufthansa", 7));
-    this.airlineList.add(new Airline("FR", "Ryanair", 20));
-    this.airlineList.add(new Airline("VY", "Vueling", 10));
-    this.airlineList.add(new Airline("TK", "Turkish Airlines", 5));
-    this.airlineList.add(new Airline("U2", "Easyjet", 19.90));
+    airlineList.add(new Airline("IB", "Iberia", 10));
+    airlineList.add(new Airline("BA", "British Airways", 15));
+    airlineList.add(new Airline("LH", "Lufthansa", 7));
+    airlineList.add(new Airline("FR", "Ryanair", 20));
+    airlineList.add(new Airline("VY", "Vueling", 10));
+    airlineList.add(new Airline("TK", "Turkish Airlines", 5));
+    airlineList.add(new Airline("U2", "Easyjet", 19.90));
 
     populateFlights();
   }
 
-  public void populateFlights() {
+  public static void populateFlights() {
     String csvFile = "./data.csv";
     BufferedReader br = null;
     String line = "";
@@ -54,8 +54,8 @@ public class DataCreation {
         }
         // use comma as separator
         String[] flight = line.split(cvsSplitBy);
-        this.flightList.add(new Flight(flight[0], flight[1], flight[2],
-            Float.parseFloat(flight[3])));
+        flightList.add(new Flight(flight[0], flight[1], flight[2], Float
+            .parseFloat(flight[3])));
       }
     } catch (FileNotFoundException e) {
       e.printStackTrace();
@@ -72,8 +72,8 @@ public class DataCreation {
     }
   }
 
-  public Airline getAirlineFromIata(String iata) {
-    for (Airline airline : this.airlineList) {
+  public static Airline getAirlineFromIata(String iata) {
+    for (Airline airline : airlineList) {
       if (iata.equals(airline.getIata())) {
         return airline;
       }
@@ -81,8 +81,8 @@ public class DataCreation {
     return null;
   }
 
-  public Airport getAirportFromCity(String city) {
-    for (Airport airport : this.airportList) {
+  public static Airport getAirportFromCity(String city) {
+    for (Airport airport : airportList) {
       if (city.equals(airport.getCity())) {
         return airport;
       }
@@ -90,8 +90,8 @@ public class DataCreation {
     return null;
   }
 
-  public Airport getAirportFromIata(String iata) {
-    for (Airport airport : this.airportList) {
+  public static Airport getAirportFromIata(String iata) {
+    for (Airport airport : airportList) {
       if (iata.equals(airport.getIata())) {
         return airport;
       }
@@ -99,13 +99,13 @@ public class DataCreation {
     return null;
   }
 
-  public List<Flight> getFlights() {
-    return this.flightList;
+  public static List<Flight> getFlights() {
+    return flightList;
   }
 
-  public void dataDeletion() {
-    this.airportList.clear();
-    this.airlineList.clear();
-    this.flightList.clear();
+  public static void dataDeletion() {
+    airportList.clear();
+    airlineList.clear();
+    flightList.clear();
   }
 }

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.flightsearch.controller.FlightDates;
+import com.flightsearch.controller.FlightSearch;
 import com.flightsearch.population.DataCreation;
 
 import junit.framework.TestCase;
@@ -17,10 +18,9 @@ public class PricingCorrectionTest extends TestCase {
   private static final long SIXTEEN_DAYS = 16 * ONE_DAY;
   private static final long THIRTY_DAYS = 30 * ONE_DAY;
   private static final long THIRTY_ONE_DAYS = 31 * ONE_DAY;
-  private DataCreation dataCreation = new DataCreation();
 
   protected void setUp() throws Exception {
-    dataCreation.dataPopulation();
+    DataCreation.dataPopulation();
   }
 
   public void testTomorrowCorrection() throws Exception {
@@ -88,6 +88,6 @@ public class PricingCorrectionTest extends TestCase {
   }
 
   protected void tearDown() throws Exception {
-    dataCreation.dataDeletion();
+    DataCreation.dataDeletion();
   }
 }
