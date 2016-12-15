@@ -3,12 +3,14 @@ package com.flightsearch.flightsearch;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import junit.framework.TestCase;
-
+import com.flightsearch.controller.FlightDates;
 import com.flightsearch.controller.FlightSearch;
 import com.flightsearch.model.SearchResult;
 import com.flightsearch.population.DataCreation;
+
+import junit.framework.TestCase;
 
 public class FlightSearchTest extends TestCase {
   private static final long ONE_DAY = 86400000;
@@ -27,15 +29,10 @@ public class FlightSearchTest extends TestCase {
   }
 
   public void testDifferenceOfDates() throws Exception {
-    String tomorrow = dateFormat.format(new Date(java.lang.System
-        .currentTimeMillis() + ONE_DAY));
-    FlightSearch flightSearch1 = new FlightSearch("Copenhage", "Frakfurt",
-        tomorrow, 2, 1, 1);
-    assertEquals(1, flightSearch1.betweenDates());
-    String twoDaysAfter = dateFormat.format(new Date(java.lang.System
-        .currentTimeMillis() + TWO_DAYS));
-    flightSearch1 = new FlightSearch("Copenhage", "Frakfurt",
-        twoDaysAfter, 2, 1, 1);
+    String tomorrow = dateFormat
+        .format(new Date(java.lang.System.currentTimeMillis() + ONE_DAY));
+    FlightDates flightDates = new FlightDates();
+    flightDates.betweenDates(tomorrow);
   }
 
   public void testSearch1() throws Exception {
@@ -44,12 +41,12 @@ public class FlightSearchTest extends TestCase {
     wantedResults.add(new SearchResult("TK2659", 198.4));
     wantedResults.add(new SearchResult("LH5909", 90.4));
 
-    String thiryOneDays = dateFormat.format(new Date(java.lang.System
-        .currentTimeMillis() + THIRTY_ONE_DAYS));
+    String thiryOneDays = dateFormat.format(
+        new Date(java.lang.System.currentTimeMillis() + THIRTY_ONE_DAYS));
     FlightSearch flightSearch = new FlightSearch("Amsterdam", "Frakfurt",
         thiryOneDays, 1, 0, 0);
     flightSearch.doSearch();
-    ArrayList<SearchResult> searchResults = flightSearch.getSearchResult();
+    List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertTrue(wantedResults.containsAll(searchResults));
   }
 
@@ -58,40 +55,40 @@ public class FlightSearchTest extends TestCase {
     wantedResults.add(new SearchResult("TK8891", 806));
     wantedResults.add(new SearchResult("LH1085", 481.19));
 
-    String fifteenDays = dateFormat.format(new Date(java.lang.System
-        .currentTimeMillis() + FIFTEEN_DAYS));
+    String fifteenDays = dateFormat
+        .format(new Date(java.lang.System.currentTimeMillis() + FIFTEEN_DAYS));
     FlightSearch flightSearch = new FlightSearch("London", "Istanbul",
         fifteenDays, 2, 1, 1);
     flightSearch.doSearch();
-    ArrayList<SearchResult> searchResults = flightSearch.getSearchResult();
+    List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertTrue(wantedResults.containsAll(searchResults));
   }
 
   public void testSearch3() throws Exception {
-    ArrayList<SearchResult> wantedResults = new ArrayList<SearchResult>();
+    List<SearchResult> wantedResults = new ArrayList<SearchResult>();
     wantedResults.add(new SearchResult("IB2171", 929.09));
     wantedResults.add(new SearchResult("LH5496", 1042.43));
 
-    String twoDays = dateFormat.format(new Date(java.lang.System
-        .currentTimeMillis() + TWO_DAYS));
-    FlightSearch flightSearch = new FlightSearch("Barcelona", "Madrid",
-        twoDays, 1, 2, 2);
+    String twoDays = dateFormat
+        .format(new Date(java.lang.System.currentTimeMillis() + TWO_DAYS));
+    FlightSearch flightSearch = new FlightSearch("Barcelona", "Madrid", twoDays,
+        1, 2, 2);
     flightSearch.doSearch();
-    ArrayList<SearchResult> searchResults = flightSearch.getSearchResult();
+    List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertTrue(wantedResults.containsAll(searchResults));
   }
 
   public void testSearchNotFound() throws Exception {
-    ArrayList<SearchResult> wantedResults = new ArrayList<SearchResult>();
+    List<SearchResult> wantedResults = new ArrayList<SearchResult>();
     wantedResults.add(new SearchResult("IB2171", 929.09));
     wantedResults.add(new SearchResult("LH5496", 1042.43));
 
-    String twoDays = dateFormat.format(new Date(java.lang.System
-        .currentTimeMillis() + TWO_DAYS));
+    String twoDays = dateFormat
+        .format(new Date(java.lang.System.currentTimeMillis() + TWO_DAYS));
     FlightSearch flightSearch = new FlightSearch("Paris", "Frakfurt", twoDays,
         1, 0, 0);
     flightSearch.doSearch();
-    ArrayList<SearchResult> searchResults = flightSearch.getSearchResult();
+    List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertEquals(0, searchResults.size());
   }
 

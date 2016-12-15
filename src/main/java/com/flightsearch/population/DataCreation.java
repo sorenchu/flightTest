@@ -5,15 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.flightsearch.model.Airline;
 import com.flightsearch.model.Airport;
 import com.flightsearch.model.Flight;
 
 public final class DataCreation {
-  private static ArrayList<Airport> airportList = new ArrayList<Airport>();
-  private static ArrayList<Airline> airlineList = new ArrayList<Airline>();
-  private static ArrayList<Flight> flightList = new ArrayList<Flight>();
+  private static List<Airport> airportList = new ArrayList<Airport>();
+  private static List<Airline> airlineList = new ArrayList<Airline>();
+  private static List<Flight> flightList = new ArrayList<Flight>();
 
   public static void dataPopulation() {
     airportList.add(new Airport("MAD", "Madrid"));
@@ -98,7 +99,7 @@ public final class DataCreation {
     return null;
   }
 
-  public static ArrayList<Flight> getFlights() {
+  public static List<Flight> getFlights() {
     return flightList;
   }
 
