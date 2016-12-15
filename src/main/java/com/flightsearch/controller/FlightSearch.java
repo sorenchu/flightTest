@@ -1,9 +1,6 @@
 package com.flightsearch.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.flightsearch.model.Airline;
 import com.flightsearch.model.Airport;
@@ -18,17 +15,15 @@ public class FlightSearch {
   private Airport dstAirport;
   private String departureDate;
   private Passengers passengers;
-  private FlightDates flightDate;
   private ArrayList<SearchResult> searchResults;
 
   public FlightSearch(String srcCity, String dstCity, String depDate,
       Integer adultPass, Integer childPass, Integer infantPass) {
-    this.srcAirport = DataCreation.getAirportFromCity(srcCity);
-    this.dstAirport = DataCreation.getAirportFromCity(dstCity);
+    this.srcAirport = this.lookForAirport(srcCity);
+    this.dstAirport = this.lookForAirport(dstCity);
     this.departureDate = depDate;
     this.passengers = new Passengers(adultPass, childPass, infantPass);
     this.searchResults = new ArrayList<SearchResult>();
-    this.flightDate = new FlightDates();
   }
 
   public String getDepartureDate() {
@@ -69,24 +64,23 @@ public class FlightSearch {
 
   public double getTotalPrice(Flight flight) {
     Airline airline = flight.getAirline();
+    FlightMath math = new FlightMath();
+    FlightDates flightDate = new FlightDates();
+    // TODO: refactor these operations
     double adultAmount = passengers.getAdultPassengers() * flight.getBasePrice()
         * flightDate.getCorrection(this.departureDate);
     double childAmount = passengers.getChildPassengers() * flight.getBasePrice()
         * flightDate.getCorrection(this.departureDate) * CHILD_DISCOUNT;
     double infantAmount = passengers.getInfantPassengers() * airline.getInfantPrice();
-    return roundingNumberToTwoDecimals(adultAmount + childAmount + infantAmount);
+    return math.roundingNumberToTwoDecimals(adultAmount + childAmount + infantAmount);
   }
 
   public ArrayList<SearchResult> getSearchResult() {
     return this.searchResults;
   }
-
-  private double roundingNumberToTwoDecimals(double initialValue) {
-    double intpart = Math.floor(initialValue);
-    double result = initialValue;
-    result = (result - intpart) * Math.pow(10, 2);
-    result = Math.round(result);
-    result = (result / Math.pow(10, 2)) + intpart;
-    return result;
+  
+  private Airport lookForAirport(String city) {
+    //TODO: THIS SHOULD BE A DB QUERY
+    return DataCreation.getAirportFromCity(city);
   }
 }
