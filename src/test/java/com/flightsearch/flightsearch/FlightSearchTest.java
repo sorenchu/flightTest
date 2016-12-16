@@ -18,14 +18,16 @@ public class FlightSearchTest extends TestCase {
   private static final long FIFTEEN_DAYS = 15 * ONE_DAY;
   private static final long THIRTY_ONE_DAYS = 31 * ONE_DAY;
   private SimpleDateFormat dateFormat;
+  private DataCreation dataCreation;
 
   public void setUp() {
-    DataCreation.dataPopulation();
+    dataCreation = new DataCreation();
+    dataCreation.dataPopulation();
     dateFormat = new SimpleDateFormat("MM/dd/yyyy");
   }
 
   public void testPopulation() throws Exception {
-    assertEquals(89, DataCreation.getFlights().size());
+    assertEquals(89, dataCreation.getFlights().size());
   }
 
   public void testDifferenceOfDates() throws Exception {
@@ -43,8 +45,8 @@ public class FlightSearchTest extends TestCase {
 
     String thiryOneDays = dateFormat.format(
         new Date(java.lang.System.currentTimeMillis() + THIRTY_ONE_DAYS));
-    FlightSearch flightSearch = new FlightSearch("Amsterdam", "Frakfurt",
-        thiryOneDays, 1, 0, 0);
+     FlightSearch flightSearch = new FlightSearch("Amsterdam", "Frakfurt",
+     thiryOneDays, 1, 0, 0, dataCreation);
     flightSearch.doSearch();
     List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertTrue(wantedResults.containsAll(searchResults));
@@ -58,7 +60,7 @@ public class FlightSearchTest extends TestCase {
     String fifteenDays = dateFormat
         .format(new Date(java.lang.System.currentTimeMillis() + FIFTEEN_DAYS));
     FlightSearch flightSearch = new FlightSearch("London", "Istanbul",
-        fifteenDays, 2, 1, 1);
+        fifteenDays, 2, 1, 1, dataCreation);
     flightSearch.doSearch();
     List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertTrue(wantedResults.containsAll(searchResults));
@@ -72,7 +74,7 @@ public class FlightSearchTest extends TestCase {
     String twoDays = dateFormat
         .format(new Date(java.lang.System.currentTimeMillis() + TWO_DAYS));
     FlightSearch flightSearch = new FlightSearch("Barcelona", "Madrid", twoDays,
-        1, 2, 2);
+        1, 2, 2, dataCreation);
     flightSearch.doSearch();
     List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertTrue(wantedResults.containsAll(searchResults));
@@ -86,13 +88,13 @@ public class FlightSearchTest extends TestCase {
     String twoDays = dateFormat
         .format(new Date(java.lang.System.currentTimeMillis() + TWO_DAYS));
     FlightSearch flightSearch = new FlightSearch("Paris", "Frakfurt", twoDays,
-        1, 0, 0);
+        1, 0, 0, dataCreation);
     flightSearch.doSearch();
     List<SearchResult> searchResults = flightSearch.getSearchResult();
     assertEquals(0, searchResults.size());
   }
 
   public void tearDown() {
-    DataCreation.dataDeletion();
+    dataCreation.dataDeletion();
   }
 }

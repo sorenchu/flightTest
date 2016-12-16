@@ -8,6 +8,7 @@ import com.flightsearch.model.Flight;
 import com.flightsearch.model.Passengers;
 import com.flightsearch.model.SearchResult;
 import com.flightsearch.population.DataCreation;
+import com.flightsearch.population.IDataCreation;
 
 public class FlightSearch {
   private static final double CHILD_DISCOUNT = 0.67;
@@ -16,9 +17,12 @@ public class FlightSearch {
   private String departureDate;
   private Passengers passengers;
   private ArrayList<SearchResult> searchResults;
+  private IDataCreation dataCreation;
 
   public FlightSearch(String srcCity, String dstCity, String depDate,
-      Integer adultPass, Integer childPass, Integer infantPass) {
+      Integer adultPass, Integer childPass, Integer infantPass,
+      DataCreation dataCreation) {
+    this.dataCreation = dataCreation;
     this.srcAirport = this.lookForAirport(srcCity);
     this.dstAirport = this.lookForAirport(dstCity);
     this.departureDate = depDate;
@@ -34,7 +38,7 @@ public class FlightSearch {
     ArrayList<Flight> flights = new ArrayList<Flight>();
     System.out.println("Flights found");
 
-    for (Flight flight : DataCreation.getFlights()) {
+    for (Flight flight : dataCreation.getFlights()) {
       if (this.isThisFlight(flight)) {
         this.processFlight(flight);
         flights.add(flight);
@@ -63,7 +67,11 @@ public class FlightSearch {
   }
 
   public double getTotalPrice(Flight flight) {
-    Airline airline = flight.getAirline();
+    Airline airline = dataCreation.getAirlineFromFlighCode(flight.getFlightCode());
+    if (airline == null) {
+      System.err.println("Airline for flight " + flight.getFlightCode() + " not found");
+      return 0.0;
+    }
     FlightMath math = new FlightMath();
     FlightDates flightDate = new FlightDates();
     // TODO: refactor these operations
@@ -71,16 +79,18 @@ public class FlightSearch {
         * flightDate.getCorrection(this.departureDate);
     double childAmount = passengers.getChildPassengers() * flight.getBasePrice()
         * flightDate.getCorrection(this.departureDate) * CHILD_DISCOUNT;
-    double infantAmount = passengers.getInfantPassengers() * airline.getInfantPrice();
-    return math.roundingNumberToTwoDecimals(adultAmount + childAmount + infantAmount);
+    double infantAmount = passengers.getInfantPassengers()
+        * airline.getInfantPrice();
+    return math
+        .roundingNumberToTwoDecimals(adultAmount + childAmount + infantAmount);
   }
 
   public ArrayList<SearchResult> getSearchResult() {
     return this.searchResults;
   }
-  
+
   private Airport lookForAirport(String city) {
-    //TODO: THIS SHOULD BE A DB QUERY
-    return DataCreation.getAirportFromCity(city);
+    // TODO: THIS SHOULD BE A DB QUERY
+    return dataCreation.getAirportFromCity(city);
   }
 }
